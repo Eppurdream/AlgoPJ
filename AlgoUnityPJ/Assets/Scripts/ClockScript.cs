@@ -11,9 +11,14 @@ public class ClockScript : MonoBehaviour
     public float oneRotationTime;
 
     public float clockTime = 0f;
+
+    private float alpha = 0f;
     bool b = false;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        alpha = clock.color.a;
+    }
     void Update()
     {
         SetClock();
@@ -36,8 +41,8 @@ public class ClockScript : MonoBehaviour
     {
         b = !b;
 
-        bgClock.color = b ? Color.white : Color.black;
-        clock.color = b ? Color.black : Color.white;
+        bgClock.color = b ? new Color(1, 1, 1, alpha) : new Color(0, 0, 0, alpha);
+        clock.color = b ? new Color(0, 0, 0, alpha) : new Color(1, 1, 1, alpha);
 
         clockTime -= oneRotationTime;
         clock.fillAmount = 1;
