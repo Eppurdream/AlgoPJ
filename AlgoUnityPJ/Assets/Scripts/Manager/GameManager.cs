@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,11 +12,18 @@ public class GameManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.Log("GameManager가 여러개 생성되었습니다");
+            Destroy(this);
+            return;
+            //Debug.Log("GameManager가 여러개 생성되었습니다");
         }
         instance = this;
 
         DontDestroyOnLoad(this);
+    }
+
+    private void Start()
+    {
+        inGame = SceneManager.GetActiveScene().name == "GameScene";
     }
 
     public void Pause()

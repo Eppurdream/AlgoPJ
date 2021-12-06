@@ -28,7 +28,10 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        ESC = Input.GetKeyDown(KeyCode.Escape); // esc는 언제 어디서나 작동 되야하기에 bindKey에 영향 받지 않는다
+        if(GameManager.instance.inGame)
+        {
+            ESC = Input.GetKeyDown(KeyCode.Escape); // esc는 언제 어디서나 작동 되야하기에 bindKey에 영향 받지 않는다
+        }
 
         if (bindkey)
         {

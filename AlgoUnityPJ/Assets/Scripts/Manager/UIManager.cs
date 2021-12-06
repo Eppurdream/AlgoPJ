@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public Transform rootPausePanel;
     public Transform selectPanel;
     public Transform settingPanel;
+    public Transform creditPanel;
 
     private Stack<Transform> pauseStack = new Stack<Transform>(); // panel들을 queue에서 관리
 
@@ -46,7 +47,10 @@ public class UIManager : MonoBehaviour
         else
         {
             GameManager.instance.Pause();
-            rootPausePanel.gameObject.SetActive(true);
+            if(rootPausePanel != null)
+            {
+                rootPausePanel.gameObject.SetActive(true);
+            }
         }
 
         panel.gameObject.SetActive(true);
@@ -66,7 +70,10 @@ public class UIManager : MonoBehaviour
             else
             {
                 GameManager.instance.DePause();
-                rootPausePanel.gameObject.SetActive(false);
+                if(rootPausePanel != null)
+                {
+                    rootPausePanel.gameObject.SetActive(false);
+                }
             }
         }
     }
