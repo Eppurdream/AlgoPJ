@@ -12,11 +12,11 @@ public class DialogManager : MonoBehaviour
     public Text nameText;
     public Text dialogText;
 
-    public float textDelay = 0.2f;
+    public float textDelay = 0.2f; // 한 글자씩 나올때마다 나오는 딜레이
 
     private Queue<IEnumerator> waitCorutinesQueue = new Queue<IEnumerator>();
-    private bool locking = false;
-    private bool firstStart = true;
+    private bool locking = false; // 누가 이미 사용중이라면 true
+    private bool firstStart = true; // 처음 시작 이후에는 false
 
     private void Awake()
     {
@@ -37,18 +37,18 @@ public class DialogManager : MonoBehaviour
         if(locking) // 이미 다른 코루틴이 실행 중일시 Queue에 넣고 나가기
         {
             waitCorutinesQueue.Enqueue(StartDialog(list));
-            firstStart = false;
             yield break;
         }
         if(firstStart)
         {
             dialogPanel.transform.localScale = new Vector3(0.1f, 1, 1);
             dialogPanel.transform.DOScaleX(1, 0.2f).SetEase(Ease.OutCirc);
+            firstStart = false;
         }
 
         locking = true;
         dialogPanel.SetActive(true);
-        InputManager.instance.bindingKeys = true;
+        InputManager.instance.BindingKey();
 
         for(int i = 0; i < list.Count; i++)
         {
@@ -86,7 +86,12 @@ public class DialogManager : MonoBehaviour
             firstStart = true;
             locking = false;
             dialogPanel.SetActive(false);
-            InputManager.instance.bindingKeys = false;
+            InputManager.instance.DeBindingKey();
         }
+    }
+
+    public bool isStartDialog()
+    {
+        return !firstStart;
     }
 }

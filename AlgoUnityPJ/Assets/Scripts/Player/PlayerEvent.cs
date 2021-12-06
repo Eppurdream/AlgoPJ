@@ -11,19 +11,6 @@ public class PlayerEvent : MonoBehaviour
 
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.C))
-        //{
-        //    List<Scenario> list = ScenarioManager.instance.GetMessage("test");
-
-
-        //    DialogManager.instance.StartDialogCorutine(list);
-
-        //    list = ScenarioManager.instance.GetMessage("test2");
-
-
-        //    DialogManager.instance.StartDialogCorutine(list);
-        //}
-
         if (InputManager.instance.EventKeyDown)
         {
             Collider2D col = Physics2D.OverlapCircle(playerEventPoint.position, 0.3f, whatIsEventObj);

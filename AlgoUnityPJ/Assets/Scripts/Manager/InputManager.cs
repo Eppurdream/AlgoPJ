@@ -11,9 +11,10 @@ public class InputManager : MonoBehaviour
 
     public bool EventKeyDown { get; private set; }
     public bool isMoving { get; private set; }
+    public bool ESC { get; private set; }
 
     public bool dialogSkipKey { get; set; }
-    public bool bindingKeys;
+    public bool bindkey { get; set; }
 
 
     private void Awake()
@@ -27,7 +28,9 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if(bindingKeys)
+        ESC = Input.GetKeyDown(KeyCode.Escape); // esc는 언제 어디서나 작동 되야하기에 bindKey에 영향 받지 않는다
+
+        if (bindkey)
         {
             isMoving = false;
             horizontal = 0;
@@ -42,5 +45,15 @@ public class InputManager : MonoBehaviour
         EventKeyDown = Input.GetKeyDown(KeyCode.Space);
         isMoving = horizontal != 0 || vertical != 0;
         dialogSkipKey = false;
+    }
+
+    public void BindingKey()
+    {
+        bindkey = true;
+    }
+
+    public void DeBindingKey()
+    {
+        bindkey = false;
     }
 }
