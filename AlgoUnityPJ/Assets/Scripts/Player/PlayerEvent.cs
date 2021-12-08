@@ -21,7 +21,10 @@ public class PlayerEvent : MonoBehaviour
 
                 List<Scenario> scenarioList = iEvent.GetScenario();
 
-                DialogManager.instance.StartDialogCorutine(scenarioList);
+                if(scenarioList != null)
+                {
+                    DialogManager.instance.StartDialogCorutine(scenarioList);
+                }
             }
         }
     }
