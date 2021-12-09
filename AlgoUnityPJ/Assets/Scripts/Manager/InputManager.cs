@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
 
     public bool dialogSkipKey { get; set; }
     public bool bindkey { get; set; }
+    public bool minigameBindkey { get; set; }
 
 
     private void Awake()
@@ -36,6 +37,23 @@ public class InputManager : MonoBehaviour
         if (GameManager.instance.inGame)
         {
             ESC = Input.GetKeyDown(KeyCode.Escape); // esc는 언제 어디서나 작동 되야하기에 bindKey에 영향 받지 않는다
+
+            if(!minigameBindkey)
+            {
+                W = Input.GetKeyDown(KeyCode.W); // WASD는 미니게임시 사용함
+                A = Input.GetKeyDown(KeyCode.A);
+                S = Input.GetKeyDown(KeyCode.S);
+                D = Input.GetKeyDown(KeyCode.D);
+                EventKeyDown = Input.GetKeyDown(KeyCode.Space); 
+            }
+            else
+            {
+                W = false; // WASD는 미니게임시 사용함
+                A = false;
+                S = false;
+                D = false;
+                EventKeyDown = false;
+            }
         }
 
         if (bindkey)
@@ -43,25 +61,14 @@ public class InputManager : MonoBehaviour
             isMoving = false;
             horizontal = 0;
             vertical = 0;
-            EventKeyDown = false;
             dialogSkipKey = dialogSkipKey == true ? true : Input.anyKeyDown;
-            W = false;
-            A = false;
-            S = false;
-            D = false;
             return;
         }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
-        EventKeyDown = Input.GetKeyDown(KeyCode.Space);
         isMoving = horizontal != 0 || vertical != 0;
         dialogSkipKey = false;
-
-        W = Input.GetKeyDown(KeyCode.W);
-        A = Input.GetKeyDown(KeyCode.A);
-        S = Input.GetKeyDown(KeyCode.S);
-        D = Input.GetKeyDown(KeyCode.D);
     }
 
     public void BindingKey()
@@ -72,5 +79,14 @@ public class InputManager : MonoBehaviour
     public void DeBindingKey()
     {
         bindkey = false;
+    }
+
+    public void BindingMinigameKey()
+    {
+        minigameBindkey = true;
+    }
+    public void DeBindingMinigameKey()
+    {
+        minigameBindkey = false;
     }
 }

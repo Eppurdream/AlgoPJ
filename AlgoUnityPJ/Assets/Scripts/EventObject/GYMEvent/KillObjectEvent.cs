@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillObjectEvent : MonoBehaviour
+public class KillObjectEvent : MonoBehaviour, IEventObject
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool isDead = false; // 죽었나 살았나
+    public List<Scenario> GetScenario()
     {
-        
-    }
+        isDead = true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return null;
     }
 }

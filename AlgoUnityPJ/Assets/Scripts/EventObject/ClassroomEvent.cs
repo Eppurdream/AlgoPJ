@@ -121,6 +121,8 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
 
     IEnumerator TurnCheck()
     {
+        InputManager.instance.BindingKey();
+        GetComponent<BoxCollider2D>().enabled = false;
         while(true)
         {
             if(!isMyTurn)
@@ -354,6 +356,9 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
         Clear();
         dir = 0;
         selectObj.gameObject.SetActive(false);
+
+        InputManager.instance.DeBindingKey();
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void Dead()
