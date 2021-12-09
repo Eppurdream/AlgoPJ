@@ -17,16 +17,16 @@ public class LightingManager : MonoBehaviour
         }
     }
 
-    public void OnGlobalLight()
+    public void OnGlobalLight(float speed = 1)
     {
-        StartCoroutine(OnToValue(1));
+        StartCoroutine(OnToValue(1, speed));
     }
 
-    public void OffGlobalLight()
+    public void OffGlobalLight(float speed = 1)
     {
-        StartCoroutine(OnToValue(0));
+        StartCoroutine(OnToValue(0, speed));
     }
-    IEnumerator OnToValue(int value)
+    IEnumerator OnToValue(int value, float speed)
     {
         bool isMin = globalLight.intensity - value < 0 ? true : false;
 
@@ -35,7 +35,7 @@ public class LightingManager : MonoBehaviour
 
             if(isMin)
             {
-                globalLight.intensity += Time.deltaTime;
+                globalLight.intensity += Time.deltaTime * speed;
                 if (globalLight.intensity >= value)
                 {
                     globalLight.intensity = value;
@@ -44,7 +44,7 @@ public class LightingManager : MonoBehaviour
             }
             else
             {
-                globalLight.intensity -= Time.deltaTime;
+                globalLight.intensity -= Time.deltaTime * speed;
                 if (globalLight.intensity <= value)
                 {
                     globalLight.intensity = value;

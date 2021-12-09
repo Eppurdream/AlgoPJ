@@ -48,7 +48,9 @@ public class DialogManager : MonoBehaviour
 
         locking = true;
         dialogPanel.SetActive(true);
+        
         InputManager.instance.BindingKey();
+        InputManager.instance.BindingMinigameKey();
 
         for(int i = 0; i < list.Count; i++)
         {
@@ -87,6 +89,7 @@ public class DialogManager : MonoBehaviour
             locking = false;
             dialogPanel.SetActive(false);
             InputManager.instance.DeBindingKey();
+            InputManager.instance.DeBindingMinigameKey();
         }
     }
 

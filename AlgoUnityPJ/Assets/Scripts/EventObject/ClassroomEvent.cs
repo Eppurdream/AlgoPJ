@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ClassroomEvent : MonoBehaviour, IEventObject
 {
@@ -12,6 +13,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
     public Transform tileParent;
     public GameObject tilePrefab;
     public Transform selectObj;
+    public CinemachineVirtualCamera ClassroomVirCam;
 
     private GameObject[,] tiles;
     private GameObject[] goals;
@@ -51,6 +53,8 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
 
         int rand = Random.Range(0, 4);
         isMyTurn = true;
+
+        PlayerManager.instance.playerObj.SetActive(false);
 
         switch (rand)
         {
@@ -123,7 +127,9 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
     {
         InputManager.instance.BindingKey();
         GetComponent<BoxCollider2D>().enabled = false;
-        while(true)
+        ClassroomVirCam.gameObject.SetActive(true);
+
+        while (true)
         {
             if(!isMyTurn)
             {
@@ -359,6 +365,9 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
 
         InputManager.instance.DeBindingKey();
         GetComponent<BoxCollider2D>().enabled = true;
+        PlayerManager.instance.playerObj.SetActive(true);
+
+        ClassroomVirCam.gameObject.SetActive(false);
     }
 
     public void Dead()
@@ -366,6 +375,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
         Clear();
         dir = 0;
         selectObj.gameObject.SetActive(false);
+        ClassroomVirCam.gameObject.SetActive(false);
         SceneMoveManager.instance.SceneMove("TitleScene");
     }
 }

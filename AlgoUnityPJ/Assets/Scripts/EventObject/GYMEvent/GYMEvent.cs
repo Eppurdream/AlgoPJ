@@ -8,6 +8,7 @@ public class GYMEvent : MonoBehaviour, IEventObject
 {
     // 19 * 7
     public GameObject killObjPrefab;
+    public GameObject fakeKillObjPrefab;
     public Transform killObjParent;
     public Transform killObjSpawnPoint;
     public int killObjCount = 7;
@@ -22,6 +23,7 @@ public class GYMEvent : MonoBehaviour, IEventObject
     private float timer = 0;
 
     private List<KillObjectEvent> killobjList = new List<KillObjectEvent>();
+    private List<FakeKillObjectEvent> fakeKillobjList = new List<FakeKillObjectEvent>();
 
     public List<Scenario> GetScenario()
     {
@@ -44,18 +46,36 @@ public class GYMEvent : MonoBehaviour, IEventObject
         timer = 0;
 
         Vector3 spawnPoint = killObjSpawnPoint.position;
-        for (int i = 0; i < killObjCount; i++)
+        int rend;
+        for (int i = 0; i < 7; i++)
         {
             GameObject g = Instantiate(killObjPrefab, killObjParent);
-            g.transform.position = new Vector3(spawnPoint.x + Random.Range(0, 19), spawnPoint.y + i);
+            rend = Random.Range(0, 19);
+            g.transform.position = new Vector3(spawnPoint.x + rend, spawnPoint.y + i);
 
             killobjList.Add(g.GetComponent<KillObjectEvent>());
+
+            for(int n = 0; n < 2; n++)
+            {
+                Vector3 fakeSpawnPoint = new Vector3(spawnPoint.x + Random.Range(0, 19), spawnPoint.y + i);
+
+                if(spawnPoint.x + rend != fakeSpawnPoint.x)
+                {
+                    g = Instantiate(fakeKillObjPrefab, killObjParent);
+
+                    g.transform.position = fakeSpawnPoint;
+
+                    fakeKillobjList.Add(g.GetComponent<FakeKillObjectEvent>());
+
+                    g.SetActive(false);
+                }
+            }
         }
 
         PlayerManager.instance.playerObj.SetActive(false);
     }
 
-    IEnumerator GYMMiniGame()
+    IEnumerator GYMMiniGame() // 더러운 코드.... 나중에 다시 찾아올 일은 없을 듯
     {
         bool isbreak = false;
 
@@ -69,6 +89,10 @@ public class GYMEvent : MonoBehaviour, IEventObject
         PlayerManager.instance.playerObj.transform.position = new Vector3(killObjSpawnPoint.position.x + 1, killObjSpawnPoint.position.y + 5);
         PlayerManager.instance.playerObj.SetActive(true);
         LightingManager.instance.OffGlobalLight();
+
+        yield return new WaitForSeconds(1.2f);
+
+        ActiveFakeObjectList();
 
         // 잡는 시간, 타이머 30초
         while (true)
@@ -97,6 +121,14 @@ public class GYMEvent : MonoBehaviour, IEventObject
                 }
             }
 
+            for (int i = 0; i < fakeKillobjList.Count; i++)
+            {
+                if (fakeKillobjList[i].isDead)
+                {
+                    KillThisFakeObject(fakeKillobjList[i]);
+                }
+            }
+
             if (isbreak) break;
 
             yield return null;
@@ -110,10 +142,34 @@ public class GYMEvent : MonoBehaviour, IEventObject
         currentkillObjCount++;
     }
 
+    void KillThisFakeObject(FakeKillObjectEvent obj)
+    {
+        Destroy(obj.gameObject);
+        fakeKillobjList.Remove(obj);
+        // 여기서 뭔갈 해야한다..............
+        Debug.Log("님 가짜 죽임..");
+    }
+
+    void ActiveFakeObjectList()
+    {
+        for(int i = 0; i < fakeKillobjList.Count; i++)
+        {
+            fakeKillobjList[i].gameObject.SetActive(true);
+        }
+    }
+
     void Success()
     {
         GYMbg.SetActive(false);
         killobjList.Clear();
+        
+        for(int i = 0; i < fakeKillobjList.Count; i++)
+        {
+            Destroy(fakeKillobjList[i].gameObject);
+        }
+
+        fakeKillobjList.Clear();
+
         timeText.text = "";
         LightingManager.instance.OnGlobalLight();
     }
@@ -122,6 +178,13 @@ public class GYMEvent : MonoBehaviour, IEventObject
     {
         GYMbg.SetActive(false);
         killobjList.Clear();
+
+        for (int i = 0; i < fakeKillobjList.Count; i++)
+        {
+            Destroy(fakeKillobjList[i].gameObject);
+        }
+
+        fakeKillobjList.Clear();
         SceneMoveManager.instance.SceneMove("TitleScene");
         timeText.text = "";
     }

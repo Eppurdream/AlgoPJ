@@ -13,7 +13,7 @@ public class PlayerEvent : MonoBehaviour
     {
         if (InputManager.instance.EventKeyDown)
         {
-            Collider2D col = Physics2D.OverlapCircle(playerEventPoint.position, 0.3f, whatIsEventObj);
+            Collider2D col = Physics2D.OverlapCircle(playerEventPoint.position, 0.05f, whatIsEventObj);
 
             if(col != null)
             {
