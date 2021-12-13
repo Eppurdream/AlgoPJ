@@ -50,14 +50,14 @@ public class GYMEvent : MonoBehaviour, IEventObject
         for (int i = 0; i < 7; i++)
         {
             GameObject g = Instantiate(killObjPrefab, killObjParent);
-            rend = Random.Range(0, 19);
-            g.transform.position = new Vector3(spawnPoint.x + rend, spawnPoint.y + i);
+            rend = Random.Range(0, 38);
+            g.transform.position = new Vector3(spawnPoint.x + rend, spawnPoint.y + (i * 2));
 
             killobjList.Add(g.GetComponent<KillObjectEvent>());
 
             for(int n = 0; n < 2; n++)
             {
-                Vector3 fakeSpawnPoint = new Vector3(spawnPoint.x + Random.Range(0, 19), spawnPoint.y + i);
+                Vector3 fakeSpawnPoint = new Vector3(spawnPoint.x + Random.Range(0, 38), spawnPoint.y + (i * 2));
 
                 if(spawnPoint.x + rend != fakeSpawnPoint.x)
                 {

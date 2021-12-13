@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightingManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class LightingManager : MonoBehaviour
     public static LightingManager instance;
 
     public Light2D globalLight;
+
+    public Light2D[] corridorLights;
+    public Image[] lightImgs;
 
     private void Awake()
     {
@@ -54,5 +58,25 @@ public class LightingManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public bool SetCorridorLight(List<bool> onOff)
+    {
+        bool isAllTrue = true;
+        for(int i = 0; i < corridorLights.Length; i++)
+        {
+            if(onOff[i])
+            {
+                corridorLights[i].gameObject.SetActive(!corridorLights[i].gameObject.activeSelf);
+                lightImgs[i].color = corridorLights[i].gameObject.activeSelf ? Color.yellow : Color.black;
+            }
+
+            if(!corridorLights[i].gameObject.activeSelf)
+            {
+                isAllTrue = false;
+            }
+        }
+
+        return isAllTrue;
     }
 }

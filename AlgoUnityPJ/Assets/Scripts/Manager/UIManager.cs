@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public Transform selectPanel;
     public Transform settingPanel;
     public Transform creditPanel;
+    public Transform bcpuzzlePanel;
 
     private Stack<Transform> pauseStack = new Stack<Transform>(); // panel들을 queue에서 관리
 
@@ -40,6 +41,11 @@ public class UIManager : MonoBehaviour
 
     public void OpenPanel(Transform panel)
     {
+        if(panel.gameObject.activeSelf)
+        {
+            return;
+        }
+
         if(pauseStack.Count >= 1)
         {
             pauseStack.Peek().gameObject.SetActive(false);

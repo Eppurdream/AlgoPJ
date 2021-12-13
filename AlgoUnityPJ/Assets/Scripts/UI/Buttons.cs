@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Buttons : MonoBehaviour
 {
@@ -11,10 +12,40 @@ public class Buttons : MonoBehaviour
     public Button startButton;
     public Button creditButton;
     public Button shotdownButton;
+    public Button[] lightOnOffButtons;
+    public List<List<bool>> lightOnOffs;
 
 
     private void Start()
     {
+        lightOnOffs = new List<List<bool>>()
+        {
+            new List<bool>(){ true, false, true, false, true, false, true, false },
+            new List<bool>(){ false, true, false, false, true, false, false, false },
+            new List<bool>(){ false, false, false, false, false, true, false ,true},
+            new List<bool>(){ true, false, false, false, false, false, true ,true},
+            new List<bool>(){ false, false, true, true, true, true, false, false}
+        };
+
+        if(lightOnOffButtons != null)
+        {
+            for(int i = 0; i < lightOnOffButtons.Length; i++)
+            {
+                Button btn = lightOnOffButtons[i];
+
+                List<bool> list = lightOnOffs[i];
+                btn.onClick.AddListener(() =>
+                {
+                    if(LightingManager.instance.SetCorridorLight(list))
+                    {
+                        // Å¬¸®¾î
+                        StartCoroutine(CorridorEventClear());
+
+                    }
+                });
+            }
+        }
+
         if(backButtons != null)
         {
             foreach (Button btn in backButtons)
@@ -69,4 +100,11 @@ public class Buttons : MonoBehaviour
             });
         }
     }
+
+    IEnumerator CorridorEventClear()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        UIManager.instance.ClosePanel();
+    }
 }
+
