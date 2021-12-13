@@ -14,11 +14,28 @@ public class Buttons : MonoBehaviour
     public Button shotdownButton;
     public Button[] lightOnOffButtons;
     public List<List<bool>> lightOnOffs;
+    public Button enterBtn;
 
 
     private void Start()
     {
-        lightOnOffs = new List<List<bool>>()
+        if(enterBtn != null)
+        {
+            enterBtn.onClick.AddListener(() =>
+            {
+                if (PasswordManager.instance.computerPW == PasswordManager.instance.GetPW())
+                {
+                    UIManager.instance.ClosePanel();
+                    DialogManager.instance.StartDialogCoroutine(ScenarioManager.instance.GetScenario("SuccessComputerPW"));
+                }
+                else
+                {
+                    PasswordManager.instance.FailPW();
+                }
+            });
+        }
+
+        lightOnOffs = new List<List<bool>>() // 으악 이상한 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         {
             new List<bool>(){ true, false, true, false, true, false, true, false },
             new List<bool>(){ false, true, false, false, true, false, false, false },

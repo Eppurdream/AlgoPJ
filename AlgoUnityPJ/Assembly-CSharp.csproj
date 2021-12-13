@@ -59,23 +59,27 @@
     <Compile Include="Assets\Scripts\UI\Buttons.cs" />
     <Compile Include="Assets\Scripts\Manager\Dialog\ScenarioManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\PasswordManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\LightingManager.cs" />
+    <Compile Include="Assets\Scripts\EventObject\CorridorEvent\BroadcastingRoomEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\InputManager.cs" />
     <Compile Include="Assets\Scripts\UI\MainCanvas.cs" />
     <Compile Include="Assets\Scripts\EventObject\GYMEvent\GYMEvent.cs" />
+    <Compile Include="Assets\Scripts\EventObject\CorridorEvent\CorridorEvent.cs" />
     <Compile Include="Assets\Scripts\EventObject\TestEventObj.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\EventObject\GYMEvent\FakeKillObjectEvent.cs" />
     <Compile Include="Assets\Scripts\EventObject\IEventObject.cs" />
-    <Compile Include="Assets\Scripts\EventObject\ClassroomEvent.cs" />
+    <Compile Include="Assets\Scripts\EventObject\ClassroomEvent\ClassroomEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneMoveManager.cs" />
     <Compile Include="Assets\Scripts\EventObject\GYMEvent\KillObjectEvent.cs" />
-    <Compile Include="Assets\Scripts\EventObject\CorridorEvent\CorridorEvent.cs" />
-    <Compile Include="Assets\Scripts\EventObject\CorridorEvent\BroadcastingRoomEvent.cs" />
+    <Compile Include="Assets\Scripts\EventObject\ComputerRoomEvent\TableEvent.cs" />
+    <Compile Include="Assets\Scripts\EventObject\ComputerRoomEvent\ComputerTableEvent.cs" />
+    <Compile Include="Assets\Scripts\EventObject\PrinterEvent\PrinterEvent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Sprites\Package\Credits.txt" />

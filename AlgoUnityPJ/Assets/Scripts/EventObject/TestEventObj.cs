@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class TestEventObj : MonoBehaviour, IEventObject
 {
-    public string eventName;
+    public List<string> eventNames;
     public List<Scenario> GetScenario()
     {
-        return ScenarioManager.instance.GetScenario(eventName);
+        for(int i = 0; i < eventNames.Count; i++)
+        {
+            DialogManager.instance.StartDialogCoroutine(ScenarioManager.instance.GetScenario(eventNames[i]));
+        }
+
+        return null;
     }
 }

@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public Transform settingPanel;
     public Transform creditPanel;
     public Transform bcpuzzlePanel;
+    public Transform pwPanel;
+    public Transform printerPanel;
 
     private Stack<Transform> pauseStack = new Stack<Transform>(); // panel들을 queue에서 관리
 

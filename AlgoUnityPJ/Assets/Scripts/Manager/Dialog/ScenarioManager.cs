@@ -51,6 +51,8 @@ public class ScenarioManager : MonoBehaviour
         {
             string[] strs = loadTexts[i].text.Split('\n');
 
+            pointer = 0;
+
             for (int n = 0; n < strs.Length; n++)
             {
                 temp = strs[n].Split(',');
@@ -69,6 +71,11 @@ public class ScenarioManager : MonoBehaviour
                 }
             }
         }
+
+        //foreach(KeyValuePair<string, List<Scenario>> keyValue in messageDic)
+        //{
+        //    Debug.Log($"Key : {keyValue.Key}, Value : {keyValue.Value}");
+        //}
     }
 
     public List<Scenario> GetScenario(string str) // 다른 클래스에서 원하는걸 주는거

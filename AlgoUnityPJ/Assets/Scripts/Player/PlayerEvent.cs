@@ -23,7 +23,7 @@ public class PlayerEvent : MonoBehaviour
 
                 if(scenarioList != null)
                 {
-                    DialogManager.instance.StartDialogCorutine(scenarioList);
+                    DialogManager.instance.StartDialogCoroutine(scenarioList);
                 }
             }
         }

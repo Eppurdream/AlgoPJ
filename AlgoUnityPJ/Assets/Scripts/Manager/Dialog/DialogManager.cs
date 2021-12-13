@@ -27,7 +27,7 @@ public class DialogManager : MonoBehaviour
         instance = this;
     }
 
-    public void StartDialogCorutine(List<Scenario> list)
+    public void StartDialogCoroutine(List<Scenario> list)
     {
         StartCoroutine(StartDialog(list));
     }

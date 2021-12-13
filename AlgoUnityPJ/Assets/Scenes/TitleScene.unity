@@ -1404,6 +1404,9 @@ MonoBehaviour:
   selectPanel: {fileID: 8805969608738778916}
   settingPanel: {fileID: 8805969608583822978}
   creditPanel: {fileID: 1334260374}
+  bcpuzzlePanel: {fileID: 0}
+  pwPanel: {fileID: 0}
+  printerPanel: {fileID: 0}
 --- !u!4 &1281860576
 Transform:
   m_ObjectHideFlags: 0
@@ -1652,6 +1655,8 @@ MonoBehaviour:
   startButton: {fileID: 921766506}
   creditButton: {fileID: 270498148}
   shotdownButton: {fileID: 124713640}
+  lightOnOffButtons: []
+  enterBtn: {fileID: 0}
 --- !u!222 &114644347791600561
 CanvasRenderer:
   m_ObjectHideFlags: 0
