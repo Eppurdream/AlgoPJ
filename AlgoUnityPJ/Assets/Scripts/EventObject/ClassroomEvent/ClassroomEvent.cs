@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class ClassroomEvent : MonoBehaviour, IEventObject
+public class ClassroomEvent : MonoBehaviour
 {
     public int row = 4; // 가로 
     public int col = 5; // 세로 이거 넘 헷갈림 => row, col
@@ -15,8 +15,10 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
     public Transform selectObj;
     public CinemachineVirtualCamera ClassroomVirCam;
 
+    public LayerMask whatIsPlayer;
+
     private GameObject[,] tiles;
-    private GameObject[] goals;
+    private GameObject goal;
 
     private Vector2 playerPos;
     private Vector2 ghostPos;
@@ -32,24 +34,37 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
     private void Awake()
     {
         tiles = new GameObject[col, row];
-        goals = new GameObject[2];
+        goal = new GameObject();
 
-        normalColor = Color.white;
-        playerColor = Color.green;
-        ghostColor = Color.red;
+        normalColor = new Color(1, 1, 1, 0.2f);
+        playerColor = new Color(0, 1, 0, 0.5f);
+        ghostColor = new Color(1, 0, 0, 0.5f);
     }
 
-    public List<Scenario> GetScenario()
+    private void Update()
     {
-        Clear();
-        Init();
-        return null;
+        BoxCollider2D boxCol = GetComponent<BoxCollider2D>();
+        Collider2D col = Physics2D.OverlapBox(transform.position, boxCol.size, 0, whatIsPlayer);
+
+        if(col != null)
+        {
+            Clear();
+            Init();
+            enabled = false;
+        }
     }
+
+    //public List<Scenario> GetScenario()
+    //{
+    //    Clear();
+    //    Init();
+    //    return null;
+    //}
 
     private void Init()
     {
         StopCoroutine(TurnCheck());
-        playerPos = new Vector2(0, 3);
+        playerPos = new Vector2(0, 2);
 
         int rand = Random.Range(0, 4);
         isMyTurn = true;
@@ -59,24 +74,23 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
         switch (rand)
         {
             case 0:
-                ghostPos = new Vector2(0, 2);
+                ghostPos = new Vector2(0, 0);
                 break;
             case 1:
-                ghostPos = new Vector2(2, 0);
+                ghostPos = new Vector2(row - 2, 0);
                 break;
             case 2:
-                ghostPos = new Vector2(3, 2);
+                ghostPos = new Vector2(row - 1, col - 1);
                 break;
             case 3:
-                ghostPos = new Vector2(2, 4);
+                ghostPos = new Vector2(0, col - 1);
                 break;
             default:
                 Debug.Log("이거 Random이 이상해요");
                 break;
         }
 
-        goals[0] = MakeTile(col - 1, row - 1, 0, padding, Color.blue);
-        goals[1] = MakeTile(0, row - 1, 0, -padding, Color.blue);
+        goal = MakeTile(0, row - 1, 1.35f, -padding, new Color(0, 0, 1, 0.5f));
 
         for (int i = 0; i < col; i++)
         {
@@ -103,6 +117,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
         GameObject g = Instantiate(tilePrefab, tileParent);
         g.transform.position = new Vector3(tileParent.position.x + n * padding + xPadding
                                                    , tileParent.position.y + i * padding + yPadding);
+
         g.GetComponent<SpriteRenderer>().color = color;
         g.SetActive(true);
 
@@ -111,8 +126,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
 
     private void Clear() // 더욱 시간을 아끼기 위해서 Destroy 함수를 사용
     {
-        Destroy(goals[0]);
-        Destroy(goals[1]);
+        Destroy(goal);
 
         for (int i = 0; i < col; i++)
         {
@@ -139,13 +153,9 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
                 continue;
             }
 
-            if (playerPos == new Vector2(row - 1, col - 1) && InputManager.instance.W)
-            {
-                SetDir(1);
-            }
             else if(playerPos == new Vector2(row - 1, 0) && InputManager.instance.S)
             {
-                SetDir(3);
+                SetDir(3, 1.35f);
             }
 
             if (InputManager.instance.EventKeyDown && dir != 0)
@@ -190,7 +200,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
         }
     }
 
-    private void SetDir(int dir) // 코드가 더러워도 양해해주신다면 감사하겠습니다
+    private void SetDir(int dir, float paddingX = 0, float paddingY = 0) // 코드가 더러워도 양해해주신다면 감사하겠습니다
     {
         this.dir = dir;
         selectObj.gameObject.SetActive(true);
@@ -204,7 +214,7 @@ public class ClassroomEvent : MonoBehaviour, IEventObject
                 selectObj.position = tiles[Mathf.RoundToInt(playerPos.y), Mathf.RoundToInt(playerPos.x)].transform.position + new Vector3(-padding, 0);
                 break;
             case 3:
-                selectObj.position = tiles[Mathf.RoundToInt(playerPos.y), Mathf.RoundToInt(playerPos.x)].transform.position + new Vector3(0, -padding);
+                selectObj.position = tiles[Mathf.RoundToInt(playerPos.y), Mathf.RoundToInt(playerPos.x)].transform.position + new Vector3(0 + paddingX, -padding + paddingY);
                 break;
             case 4:
                 selectObj.position = tiles[Mathf.RoundToInt(playerPos.y), Mathf.RoundToInt(playerPos.x)].transform.position + new Vector3(padding, 0);

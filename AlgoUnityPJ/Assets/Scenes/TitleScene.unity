@@ -879,7 +879,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Title Name
+  m_Text: I'm Fine
 --- !u!222 &407986477
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1407,6 +1407,7 @@ MonoBehaviour:
   bcpuzzlePanel: {fileID: 0}
   pwPanel: {fileID: 0}
   printerPanel: {fileID: 0}
+  pianoPanel: {fileID: 0}
 --- !u!4 &1281860576
 Transform:
   m_ObjectHideFlags: 0

@@ -17,8 +17,6 @@ public class GYMEvent : MonoBehaviour, IEventObject
 
     public float timeCount = 30;
 
-    public GameObject GYMbg;
-
     private int currentkillObjCount = 0;
     private float timer = 0;
 
@@ -41,7 +39,6 @@ public class GYMEvent : MonoBehaviour, IEventObject
         }
 
         killobjList.Clear();
-        GYMbg.SetActive(true);
         currentkillObjCount = 0;
         timer = 0;
 
@@ -50,14 +47,14 @@ public class GYMEvent : MonoBehaviour, IEventObject
         for (int i = 0; i < 7; i++)
         {
             GameObject g = Instantiate(killObjPrefab, killObjParent);
-            rend = Random.Range(0, 38);
-            g.transform.position = new Vector3(spawnPoint.x + rend, spawnPoint.y + (i * 2));
+            rend = Random.Range(0, 39);
+            g.transform.position = new Vector3(spawnPoint.x + rend + 2, spawnPoint.y + (i * 3.5f) + 2);
 
             killobjList.Add(g.GetComponent<KillObjectEvent>());
 
             for(int n = 0; n < 2; n++)
             {
-                Vector3 fakeSpawnPoint = new Vector3(spawnPoint.x + Random.Range(0, 38), spawnPoint.y + (i * 2));
+                Vector3 fakeSpawnPoint = new Vector3(spawnPoint.x + Random.Range(0, 39), spawnPoint.y + (i * 3.5f));
 
                 if(spawnPoint.x + rend != fakeSpawnPoint.x)
                 {
@@ -75,7 +72,7 @@ public class GYMEvent : MonoBehaviour, IEventObject
         PlayerManager.instance.playerObj.SetActive(false);
     }
 
-    IEnumerator GYMMiniGame() // 더러운 코드.... 나중에 다시 찾아올 일은 없을 듯
+    IEnumerator GYMMiniGame() // 더러운 코드.... 나중에 다시 찾아올 일은 없을 듯 - (12월14일.. 저는 다시 이 더러운 코드에 돌아왔습니다)
     {
         bool isbreak = false;
 
@@ -147,6 +144,7 @@ public class GYMEvent : MonoBehaviour, IEventObject
         Destroy(obj.gameObject);
         fakeKillobjList.Remove(obj);
         // 여기서 뭔갈 해야한다..............
+        timer += 10f;
         Debug.Log("님 가짜 죽임..");
     }
 
@@ -160,7 +158,6 @@ public class GYMEvent : MonoBehaviour, IEventObject
 
     void Success()
     {
-        GYMbg.SetActive(false);
         killobjList.Clear();
         
         for(int i = 0; i < fakeKillobjList.Count; i++)
@@ -176,7 +173,6 @@ public class GYMEvent : MonoBehaviour, IEventObject
 
     void Fail()
     {
-        GYMbg.SetActive(false);
         killobjList.Clear();
 
         for (int i = 0; i < fakeKillobjList.Count; i++)

@@ -35,6 +35,7 @@ public class PianoStack : MonoBehaviour
         }
         else if(passwordStack.Count == 6)
         {
+            UIManager.instance.ClosePanel();    
             Debug.Log("¼º°ø");
         }
     }

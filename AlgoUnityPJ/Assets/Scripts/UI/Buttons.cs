@@ -15,10 +15,38 @@ public class Buttons : MonoBehaviour
     public Button[] lightOnOffButtons;
     public List<List<bool>> lightOnOffs;
     public Button enterBtn;
+    public Button mapActiveBtn;
+    public Button upFloorBtn;
+    public Button downFloorBtn;
 
 
     private void Start()
     {
+        if(upFloorBtn != null)
+        {
+            upFloorBtn.onClick.AddListener(() =>
+            {
+                FloorManager.instance.UpFloor();
+            });
+        }
+
+        if(downFloorBtn != null)
+        {
+            downFloorBtn.onClick.AddListener(() =>
+            {
+                FloorManager.instance.DownFloor();
+            });
+        }
+
+        if(mapActiveBtn != null)
+        {
+            mapActiveBtn.onClick.AddListener(() =>
+            {
+                UIManager.instance.floorPanel.gameObject.SetActive(true);
+                FloorManager.instance.FirstOpen();
+            });
+        }
+
         if(enterBtn != null)
         {
             enterBtn.onClick.AddListener(() =>

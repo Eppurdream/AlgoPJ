@@ -57,6 +57,8 @@ public class DialogManager : MonoBehaviour
             dialogText.text = "";
             nameText.text = list[i].name;
 
+
+
             for (int n = 0; n < list[i].say.Length; n++)
             {
                 dialogText.text += list[i].say[n];

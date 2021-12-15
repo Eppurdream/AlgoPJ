@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     public Transform pwPanel;
     public Transform printerPanel;
     public Transform pianoPanel;
+    public Transform pianoNotePanel;
+    public Transform artPanel;
+    public Transform toiletPanel;
+    public Transform floorPanel;
 
     private Stack<Transform> pauseStack = new Stack<Transform>(); // panel들을 queue에서 관리
 
@@ -85,5 +89,25 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void AllClosePanel()
+    {
+        while(pauseStack.Count >= 1)
+        {
+            pauseStack.Pop().gameObject.SetActive(false);
+
+            if (pauseStack.Count == 0)
+            {
+                GameManager.instance.DePause();
+                if (rootPausePanel != null)
+                {
+                    rootPausePanel.gameObject.SetActive(false);
+                }
+            }
+        }
+
+
+        UIManager.instance.floorPanel.gameObject.SetActive(false);
     }
 }

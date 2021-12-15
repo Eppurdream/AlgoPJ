@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class NoteEvent : MonoBehaviour, IEventObject
 {
-    public string pianoEventName;
+    //public string pianoEventName;
     public List<Scenario> GetScenario()
     {
-        return ScenarioManager.instance.GetScenario(pianoEventName);
+        UIManager.instance.OpenPanel(UIManager.instance.pianoNotePanel);
+        return null;
+        //return ScenarioManager.instance.GetScenario(pianoEventName);
     }
 }
